@@ -210,7 +210,6 @@ public class Automato {
         this.nTerminal = this.regraProduacao.split(" ")[0];
         this.nTerminal = this.nTerminal.replace("->", "");
         this.nTerminal= this.nTerminal.trim();
-//        System.out.println(this.nTerminal);
     }
 
 }
