@@ -112,7 +112,7 @@ public class Automato {
                 }
             }
             if (encontrado){
-                mostraRelacaoPilhaFitaAposReduzir();
+                mostraRelacaoPilhaFita();
                 break;
             }
 
@@ -123,7 +123,7 @@ public class Automato {
 
     }
 
-    private void mostraRelacaoPilhaFitaAposReduzir(){
+    private void mostraRelacaoPilhaFita(){
         String pl = "";
         String ft = "";
         Formatter fmt = new Formatter();
