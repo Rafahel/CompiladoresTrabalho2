@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.List;
 
 public class Automato {
@@ -8,16 +9,16 @@ public class Automato {
     private List<String> regrasDeProducao;
     private List<String> fita;
     private List<String> pilha;
-    private List<String> auxiliar;
-    boolean stop;
+    private boolean stop;
+    private int posicaoFita;
     public Automato(String regraDeProducao, String palavra) {
         this.regraProduacao = regraDeProducao;
         this.palavra = palavra;
         this.regrasDeProducao = new ArrayList<>();
         this.fita = new ArrayList<>();
         this.pilha = new ArrayList<>();
-        this.auxiliar = new ArrayList<>();
         this.stop = false;
+        this.posicaoFita = 0;
     }
 
     public void start(){
@@ -46,15 +47,15 @@ public class Automato {
             }
 
 //            System.out.println("PILHA EM 0 : " + pilha.get(0));
-            if (this.pilha.get(0) == "$" && this.fita.get(0) == "$"){
+            if (this.pilha.get(0) == "$" && this.fita.get(posicaoFita) == "$"){
                 aceita();
                 break;
             }
-            else if (this.pilha.get(0) == "$" && this.fita.get(0) != "$"){
+            else if (this.pilha.get(0) == "$" && this.fita.get(posicaoFita) != "$"){
                 recusa();
                 break;
             }
-            if (this.pilha.get(0) != this.nTerminal && this.fita.get(0) != nTerminal){
+            if (this.pilha.get(0) != this.nTerminal && this.fita.get(posicaoFita) != nTerminal){
                 reduz();
             }
 
@@ -63,21 +64,24 @@ public class Automato {
                 empilha();
             }
 
-
-
-
         }
 
     }
 
-
     private void reduz(){
 //        System.out.println("REDUZ");
         String aux = "";
+        String desempilhado = "";
         boolean encontrado = false;
         for (String s: this.pilha) {
+//            aux = s.trim() + aux;
+//            if (aux.equals(nTerminal) && this.fita.get(posicaoFita).equals("$")){
+//                aceita();
+//            }
+
             if (!s.equals("$")){
                 aux = s.trim() + aux;
+                desempilhado = s.trim();
 //                aux = new StringBuffer(aux).reverse().toString();
             }
 //            System.out.println("sAUX = " + aux);
@@ -92,54 +96,78 @@ public class Automato {
                         *
                         * Caso contrario desempilhamos apenas o topo
                         * */
-                        for (int i = 0; i < aux.length() -1 ; i++) {
+//                        System.out.println("LENGTH AUX: " + aux.length());
+                        for (int i = 0; i < aux.length()  ; i++) {
 //                            System.out.println("REM : " + pilha.get(0));
-                            pilha.remove(pilha.remove(0));
+                            pilha.remove(0);
                         }
                     }
                     else
                         this.pilha.remove(0);
                     this.pilha.add(0, this.nTerminal);
+                    System.out.println("              REDUZINDO: " + regra);
 //                    System.out.println(" ------------------------------------------------------------------------------------ AUX substituido por: " + nTerminal);
                     encontrado = true;
                     break;
                 }
             }
-            if (encontrado)
+            if (encontrado){
+                mostraRelacaoPilhaFitaAposReduzir();
                 break;
+            }
+
+
 
 
         }
-//        System.out.println("PILHA APÓS REDUÇAO: ");
-//        for (String p : pilha)
-//            System.out.println(p);
+
+    }
+
+    private void mostraRelacaoPilhaFitaAposReduzir(){
+        String pl = "";
+        String ft = "";
+        Formatter fmt = new Formatter();
+        fmt.format("%s   %30s\n", "PILHA", "FILA");
+        for (String p : pilha)
+            pl += p + " ";
+        for (int i = posicaoFita; i <= fita.size() - 1 ; i++) {
+            ft += fita.get(i) + " ";
+        }
+        pl = new StringBuffer(pl).reverse().toString();
+        fmt.format("%s   %30s\n", pl, ft);
+        System.out.println(fmt);
+
+    }
+
+    private void finaliza(){
+        pilha.remove(0);
+        if (pilha.get(0).equals("$"))
+            aceita();
+        else
+            recusa();
     }
 
     private void empilha(){
-//        System.out.println("EMPILHANDO: " + fita.get(0));
-        if (this.fita.get(0).equals("$") && this.pilha.get(0).equals(this.nTerminal))
-            aceita();
-        else if (!this.pilha.get(0).equals(nTerminal) && this.fita.get(0).equals("$")){
-            recusa();
+        System.out.println("              EMPILHANDO: " + fita.get(posicaoFita));
+        if (this.fita.get(posicaoFita).equals("$")){
+            finaliza();
         }
-//
-        this.pilha.add(0, this.fita.get(0));
-        this.fita.remove(0);
-
+        this.pilha.add(0, this.fita.get(posicaoFita));
+        this.posicaoFita++;
     }
 
     private void empilhaInicial(){
 //        System.out.println("EMPILHA -> " +  this.fita.get(0));
-        this.pilha.add(0, this.fita.get(0));
-        this.fita.remove(0);
+        this.pilha.add(0, this.fita.get(posicaoFita));
+        this.posicaoFita++;
     }
 
     private void aceita(){
-        System.out.println("ACEITA");
+        System.out.println("PALAVRA ACEITA");
         this.stop = true;
     }
     private void recusa(){
-        System.out.println("RECUSA");
+        System.out.println("PALAVRA RECUSADA");
         this.stop = true;
     }
 
@@ -178,15 +206,11 @@ public class Automato {
     }
 
 
-
     private void encontraTerminal(){
         this.nTerminal = this.regraProduacao.split(" ")[0];
         this.nTerminal = this.nTerminal.replace("->", "");
         this.nTerminal= this.nTerminal.trim();
 //        System.out.println(this.nTerminal);
     }
-
-
-
 
 }
