@@ -128,10 +128,10 @@ public class Automato {
         String ft = "";
         Formatter fmt = new Formatter();
         fmt.format("%s   %30s\n", "PILHA", "FILA");
-        for (String p : pilha)
+        for (String p : this.pilha)
             pl += p + " ";
-        for (int i = posicaoFita; i <= fita.size() - 1 ; i++) {
-            ft += fita.get(i) + " ";
+        for (int i = this.posicaoFita; i <= this.fita.size() - 1 ; i++) {
+            ft += this.fita.get(i) + " ";
         }
         pl = new StringBuffer(pl).reverse().toString();
         fmt.format("%s   %30s\n", pl, ft);
