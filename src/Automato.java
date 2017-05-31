@@ -119,8 +119,10 @@ public class Automato {
 //        System.out.println("EMPILHANDO: " + fita.get(0));
         if (this.fita.get(0).equals("$") && this.pilha.get(0).equals(this.nTerminal))
             aceita();
-        else
+        else if (!this.pilha.get(0).equals(nTerminal) && this.fita.get(0).equals("$")){
             recusa();
+        }
+//
         this.pilha.add(0, this.fita.get(0));
         this.fita.remove(0);
 
