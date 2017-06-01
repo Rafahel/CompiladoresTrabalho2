@@ -13,7 +13,6 @@ public class Main {
     *  4) Na segunda linha até a ultima devem conter as entradas que o teste devera ser realizado;
     *  5) Cada caracter deste teste deve ser separado por espaço (a não ser que a regra produza dois caracteres grudados)
     *
-    *
     */
     public static void main(String[] args) {
         List<String> linhas = Leitor.lerArquivo();
