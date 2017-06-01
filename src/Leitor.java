@@ -4,11 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Rafahel on 01/06/2017.
- */
 public class Leitor {
-
 
     public static List<String> lerArquivo(){
         List<String> linhas = new ArrayList<>();
