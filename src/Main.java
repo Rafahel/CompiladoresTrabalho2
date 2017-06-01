@@ -1,6 +1,4 @@
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 
 public class Main {
     /*
@@ -13,15 +11,15 @@ public class Main {
     *
     */
     public static void main(String[] args) {
-        String entradaRegra = "E-> E+E | E*E | (E) | i";
-//        String entradaPalavra = "i + i * i";
-//        String entradaPalavra = "( i + i ) +";
-//        String entradaPalavra = "( i + i ) * i";
-//        String entradaPalavra = " i + i )";
-        String entradaPalavra = "i * ( ( i + i ) * i )";
-//        String entradaPalavra = "( i + i )";
-        Automato automato = new Automato(entradaRegra, entradaPalavra);
-        automato.start();
+        List<String> linhas = Leitor.lerArquivo();
+        String entradaRegra = linhas.get(0);
+        linhas.remove(0);
+        for (int i = 0; i < linhas.size() ; i++) {
+            String entradaPalavra = linhas.get(i);
+            System.out.println("INICIANDO TESTE PARA A ENTRADA: " + linhas.get(i));
+            Automato automato = new Automato(entradaRegra, entradaPalavra);
+            automato.start();
+        }
     }
 }
 

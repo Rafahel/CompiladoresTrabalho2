@@ -23,7 +23,7 @@ public class Automato {
 
     public void start(){
         this.palavra += " $";
-        System.out.println(palavra);
+//        System.out.println(palavra);
         constroiFita();
         ajustaRegrasDeProducao();
         inicializaPilha();
@@ -69,20 +69,11 @@ public class Automato {
     }
 
     private void reduz(){
-//        System.out.println("REDUZ");
         String aux = "";
-        String desempilhado = "";
         boolean encontrado = false;
         for (String s: this.pilha) {
-//            aux = s.trim() + aux;
-//            if (aux.equals(nTerminal) && this.fita.get(posicaoFita).equals("$")){
-//                aceita();
-//            }
-
             if (!s.equals("$")){
                 aux = s.trim() + aux;
-                desempilhado = s.trim();
-//                aux = new StringBuffer(aux).reverse().toString();
             }
 //            System.out.println("sAUX = " + aux);
             for (String regra: this.regrasDeProducao) {
@@ -98,15 +89,14 @@ public class Automato {
                         * */
 //                        System.out.println("LENGTH AUX: " + aux.length());
                         for (int i = 0; i < aux.length()  ; i++) {
-//                            System.out.println("REM : " + pilha.get(0));
+//                            System.out.println("REMOVE : " + pilha.get(0));
                             pilha.remove(0);
                         }
                     }
                     else
                         this.pilha.remove(0);
                     this.pilha.add(0, this.nTerminal);
-                    System.out.println("              REDUZINDO: " + regra);
-//                    System.out.println(" ------------------------------------------------------------------------------------ AUX substituido por: " + nTerminal);
+                    System.out.println("        REDUZINDO: " + regra + " para " + this.nTerminal);
                     encontrado = true;
                     break;
                 }
@@ -115,12 +105,7 @@ public class Automato {
                 mostraRelacaoPilhaFita();
                 break;
             }
-
-
-
-
         }
-
     }
 
     private void mostraRelacaoPilhaFita(){
@@ -157,17 +142,16 @@ public class Automato {
     }
 
     private void empilhaInicial(){
-//        System.out.println("EMPILHA -> " +  this.fita.get(0));
         this.pilha.add(0, this.fita.get(posicaoFita));
         this.posicaoFita++;
     }
 
     private void aceita(){
-        System.out.println("PALAVRA ACEITA");
+        System.out.println("PALAVRA ACEITA\n---------------------------------------------------------\n---------------------------------------------------------\n\n");
         this.stop = true;
     }
     private void recusa(){
-        System.out.println("PALAVRA RECUSADA");
+        System.out.println("PALAVRA RECUSADA\n---------------------------------------------------------\n---------------------------------------------------------\n\n");
         this.stop = true;
     }
 
@@ -196,9 +180,6 @@ public class Automato {
                 if (!regra.contains("|"))
                     this.regrasDeProducao.add(regra.trim());
         }
-//        for (String regra: regrasDeProducao) {
-//            System.out.print(regra + " ");
-//        }
     }
 
     private void inicializaPilha(){
