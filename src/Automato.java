@@ -142,6 +142,8 @@ public class Automato {
     }
 
     private void empilhaInicial(){
+        System.out.println("              EMPILHANDO: " + fita.get(posicaoFita));
+
         this.pilha.add(0, this.fita.get(posicaoFita));
         this.posicaoFita++;
     }

@@ -12,7 +12,7 @@ public class Leitor {
 
     public static List<String> lerArquivo(){
         List<String> linhas = new ArrayList<>();
-        String caminho = System.getProperty("user.dir") + "\\src\\entrada.txt".replaceAll("\\\\", "/");
+        String caminho = System.getProperty("user.dir") + "\\entrada.txt".replaceAll("\\\\", "/");
         try (BufferedReader br = new BufferedReader(new FileReader(caminho))) {
             String linha;
             while ((linha = br.readLine()) != null) {
