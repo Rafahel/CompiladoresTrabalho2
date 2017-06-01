@@ -125,7 +125,9 @@ public class Automato {
     }
 
     private void finaliza(){
-        pilha.remove(0);
+        if (this.pilha.get(0).equals(this.nTerminal))
+            pilha.remove(0);
+
         if (pilha.get(0).equals("$"))
             aceita();
         else
