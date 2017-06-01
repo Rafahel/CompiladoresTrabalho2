@@ -1,5 +1,4 @@
 import java.util.List;
-import java.util.Scanner;
 
 public class Main {
     /*
@@ -19,7 +18,6 @@ public class Main {
     public static void main(String[] args) {
         List<String> linhas = Leitor.lerArquivo();
         String entradaRegra = linhas.get(0);
-        Scanner scanner = new Scanner(System.in);
         linhas.remove(0);
         for (String entradaPalavra: linhas) {
             System.out.println("INICIANDO TESTE PARA A ENTRADA: " + entradaPalavra + "\n");
